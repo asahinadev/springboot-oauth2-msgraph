@@ -7,8 +7,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import com.example.spring.msgraph.oauth2.CustomOidcUserService;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguig
@@ -69,11 +67,9 @@ public class SecurityConfiguig
 
 				// ユーザー情報エンドポイント
 				.userInfoEndpoint()
-				.oidcUserService(new CustomOidcUserService())
 				.and()
 
 		;
 
 	}
-
 }

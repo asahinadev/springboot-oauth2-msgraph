@@ -1,5 +1,10 @@
 server:
   port: 9002
+  ssl:
+    key-store:          "classpath:keystore.p12"
+    key-store-password: "12345678"
+    key-store-type:     "PKCS12"
+    key-alias:          "tomcat"
 
 spring:
   security:
@@ -9,21 +14,26 @@ spring:
           msgraph:
             provider:                     "msgraph"
             client-name:                  "Microsoft"
+            
             client-id:                    "[env]"
             client-secret:                "[env]"
+            
             authorization-grant-type:     "authorization_code"
-            client-authentication-method: "POST"
+            client-authentication-method: "post"
+            
             redirect-uri:                 "{baseUrl}/login/oauth2/code/{registrationId}"
             scope:
               - openid 
               - profile 
               - email
+              - user.read
         provider: 
           msgraph:
-            authorization-uri:   "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
+            authorization-uri:   "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?prompt=consent"
             token-uri:           "https://login.microsoftonline.com/common/oauth2/v2.0/token"
             jwk-set-uri:         "https://login.microsoftonline.com/common/discovery/v2.0/keys"
-            user-info-uri:       "https://graph.microsoft.com/beta/me"
-            user-name-attribute: "id"
-            user-info-authentication-method: "GET"
-logging:    level:    org.springframework.web.client.RestTemplate: DEBUG
+#           user-info-uri:       "https://graph.microsoft.com/v1.0/me/"
+#           user-name-attribute: "id"
+#           user-info-authentication-method: "get"
+logging:    level:
+    com.example: DEBUG     org.springframework.web.client.RestTemplate: DEBUG
