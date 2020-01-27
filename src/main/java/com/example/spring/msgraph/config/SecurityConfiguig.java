@@ -9,14 +9,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguig
-		extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguig extends WebSecurityConfigurerAdapter {
 
 	@Override
-	public void configure(WebSecurity web)
-			throws Exception {
-		super.configure(web);
-
+	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(
 				// webjars
 				"/webjars/**",
@@ -29,8 +25,7 @@ public class SecurityConfiguig
 				// サウンドファイル
 				"/sound/**",
 				// WEB フォント
-				"/font/**",
-				"/fonts/**",
+				"/font*/**",
 				// 外部ライブラリ
 				"/exlib/**"
 		/**/
@@ -38,40 +33,48 @@ public class SecurityConfiguig
 	}
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
-			throws Exception {
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		super.configure(auth);
 	}
 
 	@Override
-	protected void configure(HttpSecurity http)
-			throws Exception {
-		super.configure(http);
+	protected void configure(HttpSecurity http) throws Exception {
 
+		http.authorizeRequests()
+				// TOP画面 は認証不要
+				.antMatchers("/").permitAll()
+				// その他画面 は認証必要
+				.anyRequest().authenticated();
+
+		// ログアウト設定
+		http.logout();
+
+		// FORM ログイン設定
 		http.formLogin().disable();
-		http.logout().disable();
 
+		// BASIC ログイン設定
 		http.httpBasic().disable();
 
+		// Cross Site Request Forgeries 設定
 		http.csrf().disable();
 
+		// Cross-Origin Resource 設定
+		http.cors().disable();
+
+		// OAUTH2 / OID 認証
 		http.oauth2Login()
 
 				// 認証エンドポイント
-				.authorizationEndpoint()
-				.and()
+				.authorizationEndpoint().and()
 
 				// リダイレクトエンドポイント
-				.redirectionEndpoint()
-				.and()
+				.redirectionEndpoint().and()
 
 				// アクセストークンエンドポイント
-				.tokenEndpoint()
-				.and()
+				.tokenEndpoint().and()
 
 				// ユーザー情報エンドポイント
-				.userInfoEndpoint()
-				.and()
+				.userInfoEndpoint().and()
 
 		;
 
