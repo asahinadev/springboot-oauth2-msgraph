@@ -9,6 +9,6 @@ import lombok.Data;
 @Configuration
 @ConfigurationProperties("app.microsoft.graph")
 public class MsGraphConfig {
-	String users = "https://graph.microsoft.com/v1.0/users";
-	String user = "https://graph.microsoft.com/v1.0/users/{id}";
+	String users = "https://graph.microsoft.com/beta/users";
+	String usersId = "https://graph.microsoft.com/beta/users/{id}";
 }
