@@ -7,7 +7,6 @@ HELP.md
 .classpath
 .factorypath
 .project
-.settings
 .springBeans
 .sts4-cache
 
@@ -30,3 +29,9 @@ HELP.md
 /.mvn/
 /bin
 /.gradle/
+
+
+# customize
+.settings/*
+!.settings/org.eclipse.jdt.core.prefs
+!.settings/org.eclipse.core.resources.prefs

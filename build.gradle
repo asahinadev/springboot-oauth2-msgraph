@@ -38,6 +38,7 @@ dependencies {
 	implementation group: 'org.webjars',             name: 'popper.js',                version: '1.15.0'
 	implementation group: 'org.webjars',             name: 'bootstrap',                version: '4.4.1'
 	implementation group: 'org.webjars',             name: 'font-awesome',             version: '5.12.0'
+	implementation group: 'com.microsoft.graph',     name: 'microsoft-graph',          version: '1.7.1'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
@@ -57,21 +58,8 @@ eclipse {
         
         buildCommand 'org.eclipse.buildship.core.gradleprojectbuilder'
         buildCommand 'org.springframework.ide.eclipse.boot.validation.springbootbuilder'
+        buildCommand 'org.thymeleaf.extras.eclipse.core.ThymeleafBuilder'
         
-        File f1 = file('.settings/org.eclipse.core.resources.prefs')
-        f1.write('eclipse.preferences.version=1\n')
-        f1.append('encoding/<project>=UTF-8')
-
-        File f2 = file('.settings/org.eclipse.jdt.core.prefs')
-		f2.append('org.eclipse.jdt.core.formatter.lineSplit=150\n')
-		f2.append('org.eclipse.jdt.core.formatter.join_wrapped_lines=false\n')
-		f2.append('org.eclipse.jdt.core.formatter.comment.format_javadoc_comments=false\n')
-		f2.append('org.eclipse.jdt.core.formatter.comment.format_line_comments=false\n')
-		f2.append('org.eclipse.jdt.core.formatter.comment.line_length=80\n')
-		f2.append('org.eclipse.jdt.core.formatter.comment.format_block_comments=false\n')
-		f2.append('org.eclipse.jdt.core.formatter.use_on_off_tags=true\n')
-		f2.append('org.eclipse.jdt.core.formatter.use_tabs_only_for_leading_indentations=false\n')
-
     }
 }
 
