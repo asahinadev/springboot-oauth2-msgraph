@@ -1,13 +1,17 @@
-package com.example.spring.msgraph;
+package com.example.spring.msgraph.api;
 
 import java.net.URI;
 import java.time.Instant;
+import java.util.Collections;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizationContext;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -18,12 +22,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.spring.msgraph.config.MsGraphConfig;
-import com.example.spring.msgraph.request.UserRequest;
-import com.example.spring.msgraph.response.UserResponse;
-import com.example.spring.msgraph.response.UsersResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.SneakyThrows;
@@ -32,6 +32,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class GraphApi {
+
+	public static final ResponseEntity<Map<String, String>> ok(String message) {
+		return ResponseEntity.ok(Collections.singletonMap("message", message));
+	}
+
+	public static final ResponseEntity<Map<String, String>> badRequest(String message) {
+		return ResponseEntity.badRequest().body(Collections.singletonMap("message", message));
+	}
+
+	public static final ResponseEntity<Map<String, String>> internalServerError(String message) {
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("message", message));
+	}
 
 	final MsGraphConfig config;
 	final OAuth2AuthorizedClientService clientService;
@@ -43,29 +55,6 @@ public class GraphApi {
 		this.config = config;
 		this.clientService = clientService;
 		this.om = new ObjectMapper();
-	}
-
-	public UsersResponse users() {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(config.getUsers());
-		return this.get(builder.build().toUri(), ParameterizedTypeReference.forType(UsersResponse.class));
-	}
-
-	public UserResponse user(String id) {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(config.getUsersId());
-		return this.get(builder.build(id), ParameterizedTypeReference.forType(UserResponse.class));
-	}
-
-	public UserResponse update(String id, UserRequest json) {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(config.getUsersId());
-		this.postJson(builder.build(id), ParameterizedTypeReference.forType(UserResponse.class), json);
-		return user(id);
-	}
-
-	public UserResponse delete(String id) {
-		UserResponse user = user(id);
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(config.getUsersId());
-		this.delete(builder.build(id), ParameterizedTypeReference.forType(UserResponse.class));
-		return user;
 	}
 
 	<T> T get(URI url, ParameterizedTypeReference<T> typeReference) {
