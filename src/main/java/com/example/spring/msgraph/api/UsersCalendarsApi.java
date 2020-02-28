@@ -17,9 +17,9 @@ public class UsersCalendarsApi extends GraphApi {
 		super(config, clientService);
 	}
 
-	public UsersResponse read() {
+	public UsersResponse read(String id) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(config.getUsersCalendars());
-		return this.get(builder.build().toUri(), ParameterizedTypeReference.forType(UsersResponse.class));
+		return this.get(builder.build(id), ParameterizedTypeReference.forType(UsersResponse.class));
 	}
 
 }

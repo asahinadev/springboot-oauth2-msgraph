@@ -29,6 +29,10 @@ spring:
               - User.Read
               - User.ReadBasic.All
               - User.ReadWrite
+              - Calendars.Read
+              - Calendars.Read.Shared
+              - Calendars.ReadWrite
+              - Calendars.ReadWrite.Shared
         provider: 
           msgraph:
             authorization-uri:   "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?prompt=consent"
