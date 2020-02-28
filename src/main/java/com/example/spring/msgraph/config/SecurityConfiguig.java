@@ -1,11 +1,15 @@
 package com.example.spring.msgraph.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 
 @Configuration
 @EnableWebSecurity
@@ -65,19 +69,29 @@ public class SecurityConfiguig extends WebSecurityConfigurerAdapter {
 		http.oauth2Login()
 
 				// 認証エンドポイント
-				.authorizationEndpoint().and()
+				.authorizationEndpoint()
+				.authorizationRequestRepository(authorizationRequestRepository())
+				.and()
 
 				// リダイレクトエンドポイント
-				.redirectionEndpoint().and()
+				.redirectionEndpoint()
+				.and()
 
 				// アクセストークンエンドポイント
-				.tokenEndpoint().and()
+				.tokenEndpoint()
+				.and()
 
 				// ユーザー情報エンドポイント
-				.userInfoEndpoint().and()
+				.userInfoEndpoint()
+				.and()
 
 		;
 
+	}
+
+	@Bean
+	AuthorizationRequestRepository<OAuth2AuthorizationRequest> authorizationRequestRepository() {
+		return new HttpSessionOAuth2AuthorizationRequestRepository();
 	}
 
 }
