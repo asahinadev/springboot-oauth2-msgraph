@@ -12,5 +12,5 @@ public class MsGraphConfig {
 	String users = "https://graph.microsoft.com/beta/users";
 	String usersId = "https://graph.microsoft.com/beta/users/{id}";
 	String usersDelta = "https://graph.microsoft.com/beta/users/delta";
-
+	String usersCalendars = "https://graph.microsoft.com/beta/users/{id}/calendars";
 }
