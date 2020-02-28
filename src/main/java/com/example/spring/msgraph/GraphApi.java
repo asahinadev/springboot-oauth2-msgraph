@@ -61,6 +61,13 @@ public class GraphApi {
 		return user(id);
 	}
 
+	public UserResponse delete(String id) {
+		UserResponse user = user(id);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(config.getUsersId());
+		this.delete(builder.build(id), ParameterizedTypeReference.forType(UserResponse.class));
+		return user;
+	}
+
 	<T> T get(URI url, ParameterizedTypeReference<T> typeReference) {
 		log.debug("URL => {}", url);
 		RequestEntity<?> requestEntity = new RequestEntity<>(headers(), HttpMethod.GET, url);
@@ -71,6 +78,12 @@ public class GraphApi {
 	<T> T postJson(URI url, ParameterizedTypeReference<T> typeReference, Object json) {
 		log.debug("URL => {}", url);
 		RequestEntity<?> requestEntity = new RequestEntity<>(om.writeValueAsString(json), headers(), HttpMethod.POST, url);
+		return restTemplate.exchange(requestEntity, typeReference).getBody();
+	}
+
+	<T> T delete(URI url, ParameterizedTypeReference<T> typeReference) {
+		log.debug("URL => {}", url);
+		RequestEntity<?> requestEntity = new RequestEntity<>(headers(), HttpMethod.DELETE, url);
 		return restTemplate.exchange(requestEntity, typeReference).getBody();
 	}
 
