@@ -1,7 +1,6 @@
 package com.example.spring.msgraph.response.extensions;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -14,14 +13,9 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_EMPTY)
-public class Pattern {
-	String type;
-	Long interval;
-	Long month;
-	Long dayOfMonth;
-	List<String> daysOfWeek;
-	String firstDayOfWeek;
-	String index;
+public class Owner {
+	String name;
+	String address;
 
 	@JsonAnySetter
 	Map<String, Object> ext = new HashMap<>();

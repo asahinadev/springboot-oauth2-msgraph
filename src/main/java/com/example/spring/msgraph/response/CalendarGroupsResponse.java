@@ -1,4 +1,4 @@
-package com.example.spring.msgraph.response.extensions;
+package com.example.spring.msgraph.response;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,15 +14,11 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_EMPTY)
-public class Pattern {
-	String type;
-	Long interval;
-	Long month;
-	Long dayOfMonth;
-	List<String> daysOfWeek;
-	String firstDayOfWeek;
-	String index;
+public class CalendarGroupsResponse {
+
+	List<CalendarGroupResponse> value;
 
 	@JsonAnySetter
 	Map<String, Object> ext = new HashMap<>();
+
 }

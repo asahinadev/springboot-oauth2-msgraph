@@ -7,22 +7,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.spring.msgraph.api.UsersCalendarsApi;
-import com.example.spring.msgraph.response.CalendarsResponse;
+import com.example.spring.msgraph.api.UsersCalendarGroupsApi;
+import com.example.spring.msgraph.response.CalendarGroupsResponse;
 
-@RequestMapping("/api/users/{id}/calendars")
+@RequestMapping("/api/users/{id}/calendarGroups")
 @RestController
-public class UsersCalendarApiController extends ApiController {
+public class UsersCalendarGroupsApiController extends ApiController {
 
-	UsersCalendarsApi api;
+	UsersCalendarGroupsApi api;
 
 	@Autowired
-	public UsersCalendarApiController(UsersCalendarsApi api) {
+	public UsersCalendarGroupsApiController(UsersCalendarGroupsApi api) {
 		this.api = api;
 	}
 
 	@GetMapping
-	public ResponseEntity<CalendarsResponse> index(@PathVariable String id) {
+	public ResponseEntity<CalendarGroupsResponse> index(@PathVariable String id) {
 		return ResponseEntity.ok(api.read(id));
 	}
 

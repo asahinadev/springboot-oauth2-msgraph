@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.spring.msgraph.config.MsGraphConfig;
-import com.example.spring.msgraph.response.UsersResponse;
+import com.example.spring.msgraph.response.CalendarsResponse;
 
 @Service
 public class UsersCalendarsApi extends GraphApi {
@@ -17,9 +17,16 @@ public class UsersCalendarsApi extends GraphApi {
 		super(config, clientService);
 	}
 
-	public UsersResponse read(String id) {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(config.getUsersCalendars());
-		return this.get(builder.build(id), ParameterizedTypeReference.forType(UsersResponse.class));
+	public CalendarsResponse read(String id) {
+		switch (id) {
+		case "me": {
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(config.getMeCalendars());
+			return this.get(builder.build().toUri(), ParameterizedTypeReference.forType(CalendarsResponse.class));
+		}
+		default:
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(config.getUsersCalendars());
+			return this.get(builder.build(id), ParameterizedTypeReference.forType(CalendarsResponse.class));
+		}
 	}
 
 }
