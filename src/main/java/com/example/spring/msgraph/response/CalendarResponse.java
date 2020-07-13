@@ -1,23 +1,12 @@
 package com.example.spring.msgraph.response;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import com.example.spring.msgraph.response.extensions.Attendee;
-import com.example.spring.msgraph.response.extensions.Body;
-import com.example.spring.msgraph.response.extensions.DateTime;
-import com.example.spring.msgraph.response.extensions.Location;
-import com.example.spring.msgraph.response.extensions.Owner;
-import com.example.spring.msgraph.response.extensions.Recurrence;
-import com.example.spring.msgraph.response.extensions.Status;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.example.spring.msgraph.response.extensions.*;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude.*;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
